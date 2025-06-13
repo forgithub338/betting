@@ -2,7 +2,7 @@
 import { useState } from "react";
 import stratums from "../../../../lib/stratums";
 
-export default function stratumPage() {
+export default function Rank() {
   const [formData, setFormData] = useState({
     discordID: "",
     name: "",
