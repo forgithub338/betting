@@ -27,7 +27,8 @@ export default function Rank() {
 
       const data = await res.json();
       alert(data.message);
-    } catch (_err) {
+    } catch (err) {
+      void err;
       alert("送出失敗，請稍後再試！");
     } finally {
       setIsSubmitting(false);
