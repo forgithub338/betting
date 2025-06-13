@@ -1,11 +1,13 @@
 "use client"
 import { useState } from "react";
+import stratums from "../../../../lib/stratums";
 
-export default function RankPage() {
+export default function stratumPage() {
   const [formData, setFormData] = useState({
+    discordID: "",
     name: "",
     month: "",
-    rank: "",
+    stratum: "",
   });
 
   async function handleSubmit(e: React.FormEvent) {
@@ -19,7 +21,7 @@ export default function RankPage() {
       body: JSON.stringify(formData)
     });
 
-    setFormData({ name: "", month: "", rank: "" });
+    setFormData({ discordID: "", name: "", month: "", stratum: "" });
 
     const data = await res.json();
     alert(data.message);
@@ -31,7 +33,18 @@ export default function RankPage() {
         onSubmit={handleSubmit} 
         className="bg-white p-6 md:p-8 rounded-2xl shadow-lg w-full max-w-md space-y-6"
       >
-        <h1 className="text-2xl font-bold text-center text-gray-800">玩家等級登錄</h1>
+        <h1 className="text-2xl font-bold text-center text-gray-800">比武報名系統</h1>
+
+        <div className="space-y-2">
+          <label className="block text-gray-700 font-medium">Discord Id</label>
+          <input 
+            required
+            type="text"
+            value={formData.discordID}
+            onChange={(e) => setFormData({ ...formData, discordID: e.target.value })}
+            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
         <div className="space-y-2">
           <label className="block text-gray-700 font-medium">玩家名稱</label>
@@ -54,7 +67,6 @@ export default function RankPage() {
           >
             <option value="">請選擇月份</option>
             <option value="202506">2025年6月</option>
-            <option value="202507">2025年7月</option>
           </select>
         </div>
 
@@ -62,16 +74,14 @@ export default function RankPage() {
           <label className="block text-gray-700 font-medium">本月等級</label>
           <select
             required
-            value={formData.rank}
-            onChange={(e) => setFormData({ ...formData, rank: e.target.value })}
+            value={formData.stratum}
+            onChange={(e) => setFormData({ ...formData, stratum: e.target.value })}
             className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">請選擇遷躍等級</option>
-            <option value="巔峰">巔峰</option>
-            <option value="至尊">至尊</option>
-            <option value="拔粹">拔粹</option>
-            <option value="中堅">中堅</option>
-            <option value="逍遙/雲遊">逍遙/雲遊</option>
+            {stratums.map(s => (
+              <option key={s} value={s}>{s}</option>
+            ))}
           </select>
         </div>
 
