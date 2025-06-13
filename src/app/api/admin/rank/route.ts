@@ -11,9 +11,9 @@ export async function POST(req: NextRequest) {
 
   const db = await createConnection();
 
-  const [result] = await db.query("SELECT player where playerName = ?", [name])
+  const [rows] = await db.query("SELECT * from player where playerName = ?", [name])
 
-  if(result) {
+  if(rows.length > 0) {
     return NextResponse.json({message: "此玩家已報名，若資料有誤請聯繫管理員刪除"})
   }
 
