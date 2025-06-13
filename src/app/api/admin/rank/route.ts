@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createConnection } from "../../../../../lib/connectDB";
+import { RowDataPacket } from "mysql2/promise";
 
 export async function POST(req: NextRequest) {
   const formData = await req.json();
@@ -11,7 +12,7 @@ export async function POST(req: NextRequest) {
 
   const db = await createConnection();
 
-  const [rows] = await db.query("SELECT * from player where playerName = ?", [name])
+  const [rows] = await db.query<RowDataPacket[]>("SELECT * from player where playerName = ?", [name])
 
   if(rows.length > 0) {
     return NextResponse.json({message: "此玩家已報名，若資料有誤請聯繫管理員刪除"})
