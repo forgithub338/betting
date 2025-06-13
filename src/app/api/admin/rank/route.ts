@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
   const db = await createConnection();
 
-  const [_] = await db.query(
+  await db.query(
     "INSERT INTO player (playerName, month, rank) VALUES (?, ?, ?);",
     [name, month, rank]
   )
